@@ -2,7 +2,7 @@ const  express = require('express')
 
 const auth = require('./routes/auth')// constante para enviar las rutas a auth.js
 require('dotenv').config() //es la importancion del la dependencia para configurar variables de entorno en archivo .env
-
+require('./database/db')// vinculo el archivo db.js para la configuracion de conexio a BD mongo
 
 
 const app = express()
