@@ -1,4 +1,5 @@
 const hapi = require('@hapi/joi')
+const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
 const user_regex = hapi.object({
@@ -26,6 +27,10 @@ const create_user = async user_params => {
             }
         }
 
+        const salt = await bcrypt.genSalt(10)
+        const encrypt = await bcrypt.hash(user_params.password,salt)
+        user_params.password = encrypt 
+
         const user = new User(user_params)
 
         if (!user.email != '' || !user.password != ''){
@@ -33,6 +38,8 @@ const create_user = async user_params => {
                 message: 'Hiciste algo mal'
             }
         }
+
+
         const user_respuesta = await user.save()
         return {
                 message: 'usuario guardado',
@@ -40,4 +47,43 @@ const create_user = async user_params => {
         }
     } 
 
-    module.exports = create_user
+    const login_regex = hapi.object({
+        email:hapi.string().min(6).max(256).email().required(),
+        password: hapi.string().min(3).max(256).required()
+    })
+
+    const login_user = async credential => {
+
+        const {error} = login_regex.validate(credential)
+
+        if (error){
+            return {
+                message: 'error en credenciales',
+                error: error.details[0].message
+            }
+
+        }
+
+    const user_bd = await  User.findOne({email:credential.email})
+
+    if (!user_bd){
+        return{
+            message:'usuario no existe'
+        }
+    }
+
+    const is_password_valid = await bcrypt.compare(credential.password,user_bd.password)
+    if(!is_password_valid){
+        return{
+            message:'password invalido'
+        }
+    }    
+    return{
+        message:'Bienvenido a su Portal '
+    }    
+
+}
+
+    module.exports = {
+        create_user, login_user
+    }
