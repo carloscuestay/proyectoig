@@ -25,7 +25,7 @@ const user_schema = mongoose.Schema({
     {
         type: String,
         require: true,
-        min: 3,
+        min: 6,
         max: 256
     },
     create_at:
@@ -33,6 +33,5 @@ const user_schema = mongoose.Schema({
         type: String,
         default: Date.now
     }
-
-
 })
+module.exports=mongoose.model('user',user_schema)

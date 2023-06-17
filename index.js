@@ -4,7 +4,18 @@ const auth = require('./routes/auth')// constante para enviar las rutas a auth.j
 require('dotenv').config() //es la importancion del la dependencia para configurar variables de entorno en archivo .env
 require('./database/db')// vinculo el archivo db.js para la configuracion de conexio a BD mongo
 
+const User = require('./models/user')//creo la tabla en el modelo segun schema
+const mi_user = 
+{
+    name: 'Carlos Cuesta',
+    email: 'carloscuestay@gmail.com',
+    celular: '3156792900',
+    password: 'Cacy73181'
+}
 
+new User(mi_user).save()
+
+//de aqui en adelante el framenworkexpress
 const app = express()
 
 /*app.get('/', (req, res) => {
