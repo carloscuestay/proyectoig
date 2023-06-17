@@ -1,16 +1,15 @@
 const express = require('express')
 
+const User = require('../models/user')
+const create_user = require('../servicios/auth.service.js')
 const route_auth = express.Router()
 
 
+route_auth.post('/register', async (req, res) => {
 
-
-
-route_auth.post('/register', (req, res) => {
-    console.log('mi cuerpo',req.body);
-    res.json({
-        message: 'Estoy en el resgister'
-    })
+    const user_respuesta = await create_user(req.body)
+    //console.log('mi cuerpo',req.body); es pafra probar que recibio la peticion
+    res.json(user_respuesta)
 } )
 
 route_auth.get('/login', (req, res) => {
