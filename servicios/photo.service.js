@@ -98,9 +98,7 @@ const queryall_photos = async (photo_params3) => {
         }        
     }    
 }
-
 //End point de borrado de fotos
-
 const delete_regex = hapi.object({
     user_photos: hapi.string().min(6).max(25).email().required(),
     name_photo: hapi.string().min(6).max(20).required(),
@@ -128,7 +126,6 @@ const delete_photo = async (photo_params4) => {
     }
     
 //Endpoint para actualizar un registro
-
 const update_regex = hapi.object({
     user_photos:hapi.string().min(6).max(25).email(),
     name_photo:hapi.string().min(6).max(20),
@@ -162,12 +159,9 @@ const update_photo = async (photo_params5) => {
             }  
     }    
 }
-
-
 //Exporta los end points para uso global
 module.exports = {
     create_photo, query_photo, queryall_photos, delete_photo, update_photo
-
 }
 
 
