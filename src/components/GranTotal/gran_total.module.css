@@ -1,0 +1,9 @@
+.titulo {
+    color: red;
+    background-color: black;
+}
+
+.contenedor {
+    border: 1px solid blue;
+    border-radius: 15px;
+}
